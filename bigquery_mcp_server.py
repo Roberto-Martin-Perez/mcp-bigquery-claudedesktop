@@ -7,6 +7,8 @@ import os
 import json
 import asyncio
 from typing import Any
+from datetime import date, datetime, time
+from decimal import Decimal
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent
@@ -20,6 +22,22 @@ ADDITIONAL_PROJECTS = os.getenv("BIGQUERY_ADDITIONAL_PROJECTS", "mo-monetization
 
 # Cliente de BigQuery global
 bq_client = None
+
+
+def serialize_bigquery_value(value):
+    """Convierte tipos de BigQuery a tipos serializables JSON."""
+    if value is None:
+        return None
+    elif isinstance(value, (date, datetime)):
+        return value.isoformat()
+    elif isinstance(value, time):
+        return value.isoformat()
+    elif isinstance(value, Decimal):
+        return float(value)
+    elif isinstance(value, bytes):
+        return value.decode('utf-8', errors='ignore')
+    else:
+        return value
 
 
 def get_bigquery_client(project_id=None):
@@ -240,7 +258,9 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
 
             rows = []
             for row in results:
-                rows.append(dict(row))
+                # Serializar cada valor de la fila
+                serialized_row = {key: serialize_bigquery_value(value) for key, value in dict(row).items()}
+                rows.append(serialized_row)
                 if len(rows) >= limit:
                     break
 
@@ -270,7 +290,9 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
 
             rows = []
             for row in results:
-                rows.append(dict(row))
+                # Serializar cada valor de la fila
+                serialized_row = {key: serialize_bigquery_value(value) for key, value in dict(row).items()}
+                rows.append(serialized_row)
 
             result = {
                 "table": f"{target_project}.{dataset_id}.{table_id}",
