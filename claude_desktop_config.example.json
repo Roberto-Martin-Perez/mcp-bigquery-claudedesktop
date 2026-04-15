@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "python3",
+      "args": [
+        "/ABSOLUTE/PATH/TO/mcp-bigquery-claude/bigquery_mcp_server.py"
+      ],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/ABSOLUTE/PATH/TO/mcp-bigquery-claude/credentials.json",
+        "BIGQUERY_PROJECT": "your-billing-project-id",
+        "BIGQUERY_ADDITIONAL_PROJECTS": "other-project-id,another-project-id"
+      }
+    }
+  }
+}

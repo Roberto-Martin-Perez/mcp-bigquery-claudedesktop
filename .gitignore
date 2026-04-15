@@ -1,0 +1,42 @@
+# Google Cloud credentials - NUNCA subir estos archivos
+credentials.json
+key_*.json
+*-key.json
+*_key.json
+service-account*.json
+*credentials*.json
+
+# Archivos generados por instalación
+claude_desktop_config_generated.json
+*.backup
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
