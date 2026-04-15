@@ -6,8 +6,8 @@ Script de prueba para verificar la conexión a BigQuery
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-CREDENTIALS_PATH = "key_advertising.json"
-PROJECT_ID = "mo-mp-advertising"
+CREDENTIALS_PATH = "credentials.json"
+PROJECT_ID = "your-project-id"
 
 print("=" * 60)
 print("  Verificación de conexión a BigQuery")
@@ -64,9 +64,9 @@ except Exception as e:
     print(f"Error: {e}")
     print()
     print("Verifica que:")
-    print("  • El archivo key_advertising.json existe")
+    print("  • El archivo credentials.json existe")
     print("  • Tienes permisos de BigQuery en el proyecto")
-    print("  • El proyecto mo-mp-advertising es correcto")
+    print("  • El PROJECT_ID está configurado correctamente")
     print()
     import sys
     sys.exit(1)

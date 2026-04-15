@@ -16,9 +16,9 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 
 # Configuración
-CREDENTIALS_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "key_advertising.json")
-DEFAULT_PROJECT = os.getenv("BIGQUERY_PROJECT", "mo-mp-advertising")
-ADDITIONAL_PROJECTS = os.getenv("BIGQUERY_ADDITIONAL_PROJECTS", "mo-monetization-prod-reporting").split(",")
+CREDENTIALS_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "credentials.json")
+DEFAULT_PROJECT = os.getenv("BIGQUERY_PROJECT", "your-billing-project-id")
+ADDITIONAL_PROJECTS = os.getenv("BIGQUERY_ADDITIONAL_PROJECTS", "").split(",")
 
 # Cliente de BigQuery global
 bq_client = None
@@ -250,7 +250,7 @@ async def call_tool(name: str, arguments: Any) -> list[TextContent]:
             sql = arguments["sql"]
             limit = min(arguments.get("limit", 50), 100)
 
-            # Usar DEFAULT_PROJECT (mo-mp-advertising) como billing project
+            # IMPORTANTE: Siempre usar DEFAULT_PROJECT como billing project
             # Las queries pueden acceder a datos de otros proyectos usando fully-qualified table names
             client = get_bigquery_client(DEFAULT_PROJECT)
             query_job = client.query(sql)
